@@ -50,10 +50,11 @@ export const FormKit = defineComponent({
     const generateSchema = () => {
       const schemaDefinition = node.props?.definition?.schema
       if (!schemaDefinition) error(601, node)
-      schema.value =
+      schema.value = node.hook.schema.dispatch(
         typeof schemaDefinition === 'function'
           ? schemaDefinition({ ...props.sectionsSchema })
           : schemaDefinition
+      )
     }
     generateSchema()
 

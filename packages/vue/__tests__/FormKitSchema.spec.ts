@@ -1274,3 +1274,40 @@ describe('$reset', () => {
     expect(wrapper.find('input').attributes('class')).toBe('my-class')
   })
 })
+
+describe('schema meta', () => {
+  it('can set meta on a node with no side effect', () => {
+    const wrapperA = mount(FormKitSchema, {
+      props: {
+        schema: [
+          {
+            $el: 'div',
+            meta: {
+              section: 'my-section',
+            },
+          },
+        ],
+      },
+      global: {
+        plugins: [[plugin, defaultConfig]],
+      },
+    })
+    const wrapperB = mount(FormKitSchema, {
+      props: {
+        schema: [
+          {
+            $el: 'div',
+            meta: {
+              section: 'my-section',
+            },
+          },
+        ],
+      },
+      global: {
+        plugins: [[plugin, defaultConfig]],
+      },
+    })
+    // Adding meta should produce zero side effects on rendering
+    expect(wrapperA.html()).toBe(wrapperB.html())
+  })
+})
